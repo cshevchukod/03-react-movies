@@ -8,10 +8,7 @@ interface MovieModalProps {
   onClose: () => void;
 }
 
-export default function MovieModal({
-  movie,
-  onClose,
-}: MovieModalProps) {
+export default function MovieModal({ movie, onClose }: MovieModalProps) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -28,9 +25,7 @@ export default function MovieModal({
     };
   }, [onClose]);
 
-  const handleBackdropClick = (
-    event: React.MouseEvent<HTMLDivElement>,
-  ) => {
+  const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
     }
