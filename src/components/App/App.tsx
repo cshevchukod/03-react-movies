@@ -11,15 +11,15 @@ import styles from './App.module.css';
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
 
   const handleSearch = async (query: string) => {
     try {
       setMovies([]);
-      setIsError(false);
-      setIsLoading(true);
+      setError(false);
+      setLoading(true);
 
       const data = await fetchMovies(query);
 
@@ -30,9 +30,9 @@ export default function App() {
 
       setMovies(data);
     } catch {
-      setIsError(true);
+      setError(true);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -49,11 +49,11 @@ export default function App() {
       <SearchBar onSubmit={handleSearch} />
 
       <main className={styles.main}>
-        {isLoading && <Loader />}
+        {loading && <Loader />}
 
-        {isError && <ErrorMessage />}
+        {error && <ErrorMessage />}
 
-        {!isLoading && !isError && movies.length > 0 && (
+        {!loading && !error && movies.length > 0 && (
           <MovieGrid movies={movies} onSelect={handleSelectMovie} />
         )}
       </main>
